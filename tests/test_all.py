@@ -6,10 +6,10 @@ retry = retry7.retry
 
 def test_base():
     @retry()
-    def f():
-        1
+    def f(x):
+        return x - 1
 
-    assert True
+    assert f(3) == 2
 
 
 def test_exceptions_base():

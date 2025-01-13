@@ -1,4 +1,3 @@
-import inspect
 from random import uniform
 from time import sleep
 
