@@ -24,6 +24,7 @@ def test_exceptions_base():
             tries += 1
             42 / 0
 
+        f()
     except Exception as e:
         errored = e
     assert tries == 2
@@ -54,6 +55,7 @@ def test_exceptions_list_and_custom():
             else:
                 raise Exception()
 
+        f()
     except Exception as e:
         thrown += [e]
 
@@ -76,6 +78,7 @@ def test_delay():
         def f():
             raise Exception
 
+        f()
     except Exception:
         pass
 
@@ -99,9 +102,19 @@ def test_backoff():
         def f():
             raise Exception
 
+        f()
     except Exception:
         pass
 
     assert len(slept) == 2
     assert slept[0] == 5
     assert slept[1] == 10
+
+
+def test_class():
+    class A:
+        @retry(tries=3)
+        def do_something(self, x):
+            return x - 1
+
+    assert A().do_something(5) == 4
